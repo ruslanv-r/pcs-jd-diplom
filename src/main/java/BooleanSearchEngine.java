@@ -43,8 +43,13 @@ public class BooleanSearchEngine implements SearchEngine {
                 }
 
                 for (Map.Entry<String, Integer> item : freqs.entrySet()) {
-                    pageEntryList.add(new PageEntry(pdf.getName(), i, item.getValue()));
-                    indexPDF.put(item.getKey(), pageEntryList);
+
+                    if(!indexPDF.containsKey(item.getKey())){
+                       indexPDF.put(item.getKey(), new ArrayList<>());
+                    }
+                    indexPDF.get(item.getKey()).add(new PageEntry(pdf.getName(), i, item.getValue()));
+
+
                     sj.add("Слово - " + item.getKey() + " = " + pdf.getName() + " стр: " + i + " колич: " + item.getValue());   //
                 }
 
@@ -52,7 +57,7 @@ public class BooleanSearchEngine implements SearchEngine {
         }
 
         String ddd = sj.toString();
-        System.out.println(ddd);
+        //System.out.println(ddd);
 
 //        File resut = new  File ("pdfsDir", "result");
 //
@@ -65,7 +70,13 @@ public class BooleanSearchEngine implements SearchEngine {
 
     @Override
     public List<PageEntry> search(String word) {
-        // тут реализуйте поиск по слову
-        return Collections.emptyList();
+       // List<PageEntry> wordFiltrPageEntry=new ArrayList<>();
+
+
+//        if (wordFiltrPageEntry.isEmpty()) {
+//            return Collections.emptyList();
+//        } else{
+            return indexPDF.get(word.toLowerCase());
+//        }
     }
 }
