@@ -20,6 +20,8 @@ public class Client {
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         ) {
             out.println(word);
+            String inValue = in.readLine();
+            System.out.println(inValue);
         }
 
     }
